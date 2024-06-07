@@ -1,0 +1,18 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.roboto-regular {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+.nav-link{
+    font-size: 20px; 
+    color: lightblue;    
+}
+.linesymbol{
+    color: lightblue;
+}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+<div class="d-flex flex-wrap px-5 align-items-center mt-5">
+  <div class="col-6">
+    <h1 class="fw-bold">Welcome to HorseCar!</h1>      
+      <h2 class="text-info">Car buying shaped to your life</h2>
+    
+    <p class="fs-1">How much car can you afford? Find out, then see vehicles that match your budget!
+      Add your car to Your Garage to track its market value and cash in when the time is right to sell.
+    </p>
+
+  </div>
+
+  <div class="col-6">
+    <img src="{% static 'images/car-vehicle-luxury-116675.jpg' %}" alt="" width="100%">
+  </div>
+
+</div>
+
+
+  <div class="bg-light px-5">
+    <h2 class="mb-4">Popular Brand</h2>
+    {% for cat in category %}       
+        <a href="{% url 'category_wise_post' cat.slug %}" class="btn btn-outline-dark p-2 mx-1 mb-2 fs-3">{{cat.name}}</a>
+        {% endfor %}  
+  </div>
+
+
+  <div class="d-flex flex-wrap p-4">
+    <div class="col-12">
+      <h2 class="mb-4">Total Car Found : {{data | length }}</h2>
+      <div class="d-flex flex-wrap">    
+        {% for post in data %}
+        <div class="col-sm-3">
+            <div class="card mx-2">
+              <div class="card-body">
+                  <img src="{{post.image.url}}" class="card-img-top" alt="...">                              
+                  <h5>Name : <a href="{% url 'detail_post' post.id %}" class="text-decoration-none">{{post.title}}</a></h5>
+                  <p>Price : {{post.car_price}}</p>              
+                  <!-- <h6 class="card-subtitle mb-2 text-muted">{{post.assign_date}}</h6> -->
+                  <!-- <p class="card-text">{{post.description | truncatewords:10}}</p> -->
+                  <!-- <p>User: {{post.user.first_name}} {{post.user.last_name}}</p> -->
+                  <p>Brand : 
+                    {% for cat in post.category.all %}
+                    <button class="btn btn-warning btn-sm m-1">{{cat.name}}</button>  
+                    {% endfor %}
+                  </p>
+                  
+                  <a href="{% url 'detail_post' post.id %}" class="btn btn-primary">View Details</a>              
+                </div>
+                
+              </div>
+
+              
+        </div>
+        {% endfor %}         
+      </div>
+  </div>
+</div>
+{% endblock %}
