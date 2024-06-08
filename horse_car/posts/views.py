@@ -92,13 +92,16 @@ class DetailPostView(DetailView):
     template_name = 'post_details.html'
 
     def post(self, request, *args, **kwargs):
-        comment_form = forms.CommentForm(data=self.request.POST)
+        comment_form = forms.CommentForm(data=request.POST)
         post = self.get_object()
         if comment_form.is_valid():
             new_comment = comment_form.save(commit=False)
             new_comment.post = post
             new_comment.save()
-        return self.get(request, *args, **kwargs)         
+            messages.success(request, 'Your comment has been added.')
+        else:
+            messages.error(request, 'There was an error with your comment.')
+        return redirect('detail_post', id=post.id)         
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
