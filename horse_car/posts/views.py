@@ -86,6 +86,26 @@ def is_complete(request, id):
 
 
 
+
+
+@login_required
+def buy_now(request, id):
+    post = Post.objects.get(pk=id)
+    if post.quantity > 0:        
+        post.quantity -= 1
+        post.save()
+        order = Order(user=request.user, post=post)
+        order.save()
+        messages.success(request, 'Buy Successfully')
+        return redirect('profile')
+    else:
+        messages.warning(request, 'Out of Stock')
+        return redirect('profile')
+
+
+
+
+
 class DetailPostView(DetailView):
     model = models.Post
     pk_url_kwarg = 'id'
@@ -115,18 +135,4 @@ class DetailPostView(DetailView):
 
 
 
-
-@login_required
-def buy_now(request, id):
-    post = Post.objects.get(pk=id)
-    if post.quantity > 0:        
-        post.quantity -= 1
-        post.save()
-        order = Order(user=request.user, post=post)
-        order.save()
-        messages.success(request, 'Buy Successfully')
-        return redirect('profile')
-    else:
-        messages.warning(request, 'Out of Stock')
-        return redirect('profile')
 

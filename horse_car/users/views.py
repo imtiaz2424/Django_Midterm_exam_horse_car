@@ -32,23 +32,23 @@ def register(request):
     return render(request, 'register.html', {'form' : register_form, 'type' : 'Register'})
 
 
-def user_login(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(request=request, data=request.POST)
-        if form.is_valid():
-            user_name = form.cleaned_data['username']
-            user_pass = form.cleaned_data['password']
-            user = authenticate(username=user_name, password=user_pass)
-            if user is not None:
-                messages.success(request, 'Logged in Successfully')
-                login(request, user)
-                return redirect('profile')
-            else:
-                messages.warning(request, 'Login information incorrect')
-                return redirect('register')
-    else:
-        form = AuthenticationForm()
-    return render(request, 'register.html', {'form': form, 'type' : 'Login'})
+# def user_login(request):
+#     if request.method == 'POST':
+#         form = AuthenticationForm(request=request, data=request.POST)
+#         if form.is_valid():
+#             user_name = form.cleaned_data['username']
+#             user_pass = form.cleaned_data['password']
+#             user = authenticate(username=user_name, password=user_pass)
+#             if user is not None:
+#                 messages.success(request, 'Logged in Successfully')
+#                 login(request, user)
+#                 return redirect('profile')
+#             else:
+#                 messages.warning(request, 'Login information incorrect')
+#                 return redirect('register')
+#     else:
+#         form = AuthenticationForm()
+#     return render(request, 'register.html', {'form': form, 'type' : 'Login'})
 
 
 # user login view class based view

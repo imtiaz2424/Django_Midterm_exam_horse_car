@@ -34,8 +34,8 @@
       <h2 class="mb-4">Total Car Found : {{data | length }}</h2>
       <div class="d-flex flex-wrap">    
         {% for post in data %}
-        <div class="col-sm-3">
-            <div class="card mx-2">
+        <div class="col-sm-3 mb-3">
+            <div class="card mx-2 h-100">
               <div class="card-body">                                   
                   {% if post.image %}
                       <img src="{{ post.image.url }}" class="card-img-top" alt="...">
