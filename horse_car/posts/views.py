@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from . import forms
 from . import models
-from .models import Post
+from .models import Post, Order
 from django.utils.decorators import method_decorator
 
 from django.contrib.auth.decorators import login_required
@@ -114,14 +114,16 @@ class DetailPostView(DetailView):
 
 
 @login_required
-def buy_now(request, id):   
-    post = Post.objects.get(pk=id)          
-    if post.quantity > 0:
+def buy_now(request, id):
+    post = Post.objects.get(pk=id)
+    if post.quantity > 0:        
         post.quantity -= 1
         post.save()
-        messages.success(request, 'Buy Successfully')           
+        order = Order(user=request.user, post=post)
+        order.save()
+        messages.success(request, 'Buy Successfully')
         return redirect('profile')
     else:
-        messages.warning(request, 'Out of Stock')           
+        messages.warning(request, 'Out of Stock')
         return redirect('profile')
 

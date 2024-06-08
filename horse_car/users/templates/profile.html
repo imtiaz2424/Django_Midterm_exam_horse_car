@@ -9,28 +9,23 @@
 </div>
 
 <div class="d-flex flex-wrap justify-content-center px-5 pt-5">
-    
-  <div class="d-flex flex-wrap">    
-    {% for post in data %}
+     
+    {% for order in orders %}
     <div class="col-sm-3">
         <div class="card mx-2">
           <div class="card-body">
-              <img src="{{post.image.url}}" class="card-img-top" alt="...">                              
-              <h5>Name : <a href="{% url 'detail_post' post.id %}" class="text-decoration-none">{{post.title}}</a></h5>
-              <p>Price : {{post.car_price}}</p>             
+              <img src="{{order.post.image.url}}" class="card-img-top" alt="...">                              
+              <h5>Name : <a href="{% url 'detail_post' order.post.id %}" class="text-decoration-none">{{order.post.title}}</a></h5>
+              <p>Price : {{order.post.car_price}}</p>             
               <p>Brand : 
-                {% for cat in post.category.all %}
+                {% for cat in order.post.category.all %}
                 <button class="btn btn-warning btn-sm m-1">{{cat.name}}</button>  
                 {% endfor %}
               </p>
-              <a href="{% url 'detail_post' post.id %}" class="btn btn-primary">View Details</a>              
+              <a href="{% url 'detail_post' order.post.id %}" class="btn btn-primary">View Details</a>              
             </div>            
           </div>          
     </div>
     {% endfor %}         
   </div> 
-        
-</div>
-
-
 {% endblock %}

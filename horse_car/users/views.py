@@ -4,7 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import authenticate, login, update_session_auth_hash, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from posts.models import Post
+from posts.models import Post, Order
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 
@@ -77,9 +77,10 @@ class UserLoginView(LoginView):
 
 
 @login_required
-def profile(request): 
-    data = Post.objects.filter(user = request.user)   
-    return render(request, 'profile.html', {'data' : data})
+def profile(request):    
+    orders = Order.objects.filter(user=request.user)  
+    return render(request, 'profile.html', {'orders': orders})       
+    
 
 
 @login_required
